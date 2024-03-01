@@ -32,11 +32,10 @@
 #include "./headers/console.hpp"
 #include "./headers/json.hpp"
 #include "./headers/rang.hpp"
-#include "./headers/timer.hpp"
 #include <algorithm>
 #include <fstream>
 #include <iostream>
-#include <time.h>
+//#include <time.h>
 #include <vector>
 
 using namespace std;
