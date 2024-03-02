@@ -35,8 +35,10 @@
 #include <algorithm>
 #include <fstream>
 #include <iostream>
-//#include <time.h>
+// TODO: probably need to #include <fstream>
+// #include <time.h> (time.hpp removed for simplicity)
 #include <vector>
+// ? may need to #include <conio.h> to test for 'Enter' key input
 
 using namespace std;
 using namespace rang;
@@ -205,6 +207,10 @@ int main() {
   char k;                          // holder for character being typed
   string key;                      // string version of char for printing
   string substr = "";              // var to concatenate letters to
+  /* 
+  TODO: Need to replace animals vector with ifstream to input dictionary.json
+  ?Assume it will look something like: 
+  ?ifstream json("dictionary.json");*/
   vector<string> animals = loadAnimalsFast(); // array of animal names
   vector<string> matches; // any matches found in vector of animals
   int loc;                // location of substring to change its color
@@ -216,6 +222,8 @@ int main() {
       "Hit the DEL key to erase a letter from your search string.");
   mainMenu.push_back(
       "When a single word is found, hit enter. (this is for real assignment.");
+  mainMenu.push_back(
+      "Press 'Z' to exit.");
 
   clearConsole();
   titleBar("Getch Example", console_size.width);
@@ -286,6 +294,11 @@ int main() {
       if (matches.size() == 1) {
         cout << "done?" << endl;
         // this isn't handled at all, just messin around
+        /** 
+         * TODO: create way to allow user to input 'Enter' to get definition from JSON
+         * ? getch()
+         * ? if (k == 13) 
+         *   ?  access str and */ 
       }
     }
   }
