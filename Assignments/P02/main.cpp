@@ -35,6 +35,7 @@
 #include <algorithm>
 #include <fstream>
 #include <iostream>
+#include "loadJsonEx.hpp"
 // TODO: probably need to #include <fstream>
 // #include <time.h> (time.hpp removed for simplicity)
 #include <vector>
@@ -202,16 +203,33 @@ void errorMessage(string message) {
   sleep(1);
 }
 
+/**
+ * printDefinition
+ * 
+ * Description:
+ *      Prints the definition of the selected word from dictionary.json
+ * Params:
+ *      string match - sought after dictionary word
+ * Returns:
+ *      string - definition of JSON object
+*/
+string printDefinition(json match)
+{
+  return match["obj"]["str"];
+}
+
 int main() {
   console_size = getConsoleSize(); // get width and height of console
   char k;                          // holder for character being typed
   string key;                      // string version of char for printing
   string substr = "";              // var to concatenate letters to
   /* 
-  TODO: Need to replace animals vector with ifstream to input dictionary.json
+  TODO: Need to replace animals vector with appropriate method to input dictionary.json
   ?Assume it will look something like: 
-  ?ifstream json("dictionary.json");*/
-  vector<string> animals = loadAnimalsFast(); // array of animal names
+  ?ifstream json("dictionary.json");
+  ? but it cout also be "vector<string> dictWord = loadJsonFile();"*/
+  //vector<string> animals = loadAnimalsFast(); // array of animal names
+  vector<string> dictWord = loadJsonFile("./data/dictionary.json");   // JSON of dictionary values
   vector<string> matches; // any matches found in vector of animals
   int loc;                // location of substring to change its color
   bool deleting = false;
@@ -247,6 +265,8 @@ int main() {
     } else {
       deleting = false;
       // Make sure a letter was pressed and only letter
+      // TODO: add if matches.size() != 1 to !isalpha conditional
+      // TODO: add else if(matches.size() == 1 && k == 13) check if done and call for definition
       if (!isalpha(k)) {
         errorMessage("Letters only!");
         continue;
@@ -265,7 +285,9 @@ int main() {
 
     // Find any animals in the array that partially match
     // our substr word
-    matches = partialMatch(animals, substr);
+    // TODO: swap animals with dictWord
+    //matches = partialMatch(animals, substr);
+    matches = partialMatch(dictWord, substr);
 
     if ((int)k != 32) { // if k is not a space print it
 
@@ -296,9 +318,8 @@ int main() {
         // this isn't handled at all, just messin around
         /** 
          * TODO: create way to allow user to input 'Enter' to get definition from JSON
-         * ? getch()
          * ? if (k == 13) 
-         *   ?  access str and */ 
+         *   ?  set str = matches[0]; */ 
       }
     }
   }

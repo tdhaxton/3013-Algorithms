@@ -10,7 +10,9 @@ using json = nlohmann::json;
 
 void saveWords(json j) {
     ofstream fout;
-    fout.open("./data/words.txt");
+    // TODO: Change words.txt to dictionary.json
+    //fout.open("./data/words.txt");
+    fout.open("./data/dictionary.json");
 
     for (auto &element : j.items()) {
         string key = element.key();
@@ -45,15 +47,15 @@ json loadJsonFile(string filePath) {
     //     partialKey = argv[1];
 
     // Iterate over all key-value pairs
-    for (auto &element : myJson.items()) {
-        string key = element.key();
+    // for (auto &element : myJson.items()) {
+    //     string key = element.key();
 
-        // Check if the key contains the partialKey substring
-        if (key.find(partialKey) != string::npos) {
-            // Found a match, do something with it
-            cout << "Found partial match: " << key << " -> " << element.value() << endl;
-        }
-    }
+    //     // Check if the key contains the partialKey substring
+    //     if (key.find(partialKey) != string::npos) {
+    //         // Found a match, do something with it
+    //         cout << "Found partial match: " << key << " -> " << element.value() << endl;
+    //     }
+    // }
 
     return myJson;
 }
