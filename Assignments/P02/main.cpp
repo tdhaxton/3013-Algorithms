@@ -60,7 +60,7 @@ consoleSize console_size; // used to store the size of console (width=cols and
  * Returns:
  *      vector<string> - holding all the matches to substring
  */
-vector<string> partialMatch(vector<string> array, string substring) {
+/*vector<string> partialMatch(vector<string> array, string substring) {
   vector<string> matches; // to hold any matches
   size_t found;           // size_t is an integer position of
                           // found item. -1 if its not found.
@@ -78,6 +78,43 @@ vector<string> partialMatch(vector<string> array, string substring) {
 
   return matches;
 }
+*//*
+* partialMatch
+*
+* Description:
+*         Finds partial matches in an array of strings and returns them. It
+ *      doesn't matter where in the string the match is.
+ * Params:
+ *      json  array                 - array to search
+ *      string substring            - substring to search for in each word
+ *
+ * Returns:
+ *      vector<string> - holding all the matches to substring
+ */
+
+vector<string> partialMatch(json array, string substring) {
+  vector<string> arr;     // to hold json dictionary
+  vector<string> matches; // to hold any matches
+  size_t found;           // size_t is an integer position of
+                          // found item. -1 if its not found.
+
+  if (substring.size() == 0) {
+    return matches;
+  }
+  for (const auto& item : array.items()) { // loop through array
+    arr.push_back(item.key());
+  }
+  
+  for (int i = 0; i < array.size(); i++) { // loop through array
+    found = arr[i].find(substring);      // check for substr match
+    if (found != string::npos) {           // if found >= 0 (its found then)
+      matches.push_back(arr[i]);       // add to matches
+    }
+  }
+
+  return matches;
+}
+
 
 /**
 * Prints a long background row of gray, with text centered.
@@ -227,9 +264,19 @@ int main() {
   TODO: Need to replace animals vector with appropriate method to input dictionary.json
   ?Assume it will look something like: 
   ?ifstream json("dictionary.json");
-  ? but it cout also be "vector<string> dictWord = loadJsonFile();"*/
+  ? but it cout also be "vector<string> dictWord = loadJsonFile();"
+  ? loadJsonFile returns a json object...dictWord is a vector*/
   //vector<string> animals = loadAnimalsFast(); // array of animal names
-  vector<string> dictWord = loadJsonFile("./data/dictionary.json");   // JSON of dictionary values
+  json dictWord = loadJsonFile("./data/dictionary.json");   // JSON of dictionary values
+  // ! Make sure this comes back out
+  for (const auto& item : dictWord.items())
+    {
+        std::cout << item.key() << "\n";
+        // for (const auto& val : item.value().items())
+        // {
+        //     std::cout << "  " << val.key() << ": " << val.value() << "\n";
+        // }
+    }
   vector<string> matches; // any matches found in vector of animals
   int loc;                // location of substring to change its color
   bool deleting = false;
@@ -266,7 +313,7 @@ int main() {
       deleting = false;
       // Make sure a letter was pressed and only letter
       // TODO: add if matches.size() != 1 to !isalpha conditional
-      // TODO: add else if(matches.size() == 1 && k == 13) check if done and call for definition
+      // TODO: add else if(k == 13) check if done and call for definition
       if (!isalpha(k)) {
         errorMessage("Letters only!");
         continue;
@@ -286,6 +333,7 @@ int main() {
     // Find any animals in the array that partially match
     // our substr word
     // TODO: swap animals with dictWord
+    // ? dictWord needs to be vector, but might need to be json
     //matches = partialMatch(animals, substr);
     matches = partialMatch(dictWord, substr);
 
@@ -319,7 +367,7 @@ int main() {
         /** 
          * TODO: create way to allow user to input 'Enter' to get definition from JSON
          * ? if (k == 13) 
-         *   ?  set str = matches[0]; */ 
+         *   ?  cout << items.value(); */ 
       }
     }
   }
