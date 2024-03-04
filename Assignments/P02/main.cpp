@@ -85,34 +85,54 @@ consoleSize console_size; // used to store the size of console (width=cols and
 *         Finds partial matches in an array of strings and returns them. It
  *      doesn't matter where in the string the match is.
  * Params:
- *      json  array                 - array to search
- *      string substring            - substring to search for in each word
+ *      json myJson                 - JSON file to search
+ *      string partialKey           - substring to search for in each word
  *
  * Returns:
  *      vector<string> - holding all the matches to substring
  */
 
-vector<string> partialMatch(json array, string substring) {
-  vector<string> arr;     // to hold json dictionary
+vector<string> partialMatch(json myJson, string partialKey) {
+  // The substring you are looking for in the keys
+    // if (argc == 1)
+    //   partialKey = "axal";
+    // else
+    //   partialKey = argv[1];
   vector<string> matches; // to hold any matches
-  size_t found;           // size_t is an integer position of
-                          // found item. -1 if its not found.
-
-  if (substring.size() == 0) {
-    return matches;
-  }
-  for (const auto& item : array.items()) { // loop through array
-    arr.push_back(item.key());
-  }
-  
-  for (int i = 0; i < array.size(); i++) { // loop through array
-    found = arr[i].find(substring);      // check for substr match
-    if (found != string::npos) {           // if found >= 0 (its found then)
-      matches.push_back(arr[i]);       // add to matches
+    //Iterate over all key-value pairs
+    for (auto &element : myJson.items()) {
+      string key = element.key();
+    // Check if the key contains the partialKey substring
+      if (key.find(partialKey) != string::npos) {
+        // Found a match, do something with it
+        // if (matches.size() <= 10)
+        // {
+          //cout << "Found partial match: " << key << " -> " << element.key() << endl; //!Changed to element.key from value
+          matches.push_back(element.key()); //!Changed to element.key from element.value
+        // }
+      }
     }
-  }
+    return matches;
+  // vector<string> arr;     // to hold json dictionary
+  // vector<string> matches; // to hold any matches
+  // size_t found;           // size_t is an integer position of
+  //                         // found item. -1 if its not found.
 
-  return matches;
+  // if (substring.size() == 0) {
+  //   return matches;
+  // }
+  // for (const auto& item : array.items()) { // loop through array
+  //   arr.push_back(item.key());
+  // }
+  
+  // for (int i = 0; i < array.size(); i++) { // loop through array
+  //   found = arr[i].find(substring);      // check for substr match
+  //   if (found != string::npos) {           // if found >= 0 (its found then)
+  //     matches.push_back(arr[i]);       // add to matches
+  //   }
+  // }
+
+  // return matches;
 }
 
 
@@ -250,10 +270,10 @@ void errorMessage(string message) {
  * Returns:
  *      string - definition of JSON object
 */
-string printDefinition(json match)
-{
-  return match["obj"]["str"];
-}
+// string printDefinition(json match)
+// {
+//   return match.value();
+// }
 
 int main() {
   console_size = getConsoleSize(); // get width and height of console
@@ -268,15 +288,15 @@ int main() {
   ? loadJsonFile returns a json object...dictWord is a vector*/
   //vector<string> animals = loadAnimalsFast(); // array of animal names
   json dictWord = loadJsonFile("./data/dictionary.json");   // JSON of dictionary values
-  // ! Make sure this comes back out
-  for (const auto& item : dictWord.items())
-    {
-        std::cout << item.key() << "\n";
-        // for (const auto& val : item.value().items())
-        // {
-        //     std::cout << "  " << val.key() << ": " << val.value() << "\n";
-        // }
-    }
+  // ! Make sure this comes out
+  // for (const auto& item : dictWord.items())
+  //   {
+  //       std::cout << item.key() << "\n";
+  //       for (const auto& val : item.value().items())
+  //       {
+  //           std::cout << "  " << val.key() << ": " << val.value() << "\n";
+  //       }
+  //   }
   vector<string> matches; // any matches found in vector of animals
   int loc;                // location of substring to change its color
   bool deleting = false;
@@ -351,15 +371,29 @@ int main() {
       for (auto &c : substr)
         c = tolower(c);
       // This prints out all found matches
-      for (int i = 0; i < matches.size(); i++) {
-        // find the substring in the substr
-        loc = matches[i].find(substr);
-        // if its found
-        if (loc != string::npos) {
-          printHighlightedSubstr(matches[i], substr, loc);
-        }
+      if (matches.size() > 10){
+        for (int i = 0; i < 10; i++) {    // !changed loop to print out 10, instead of matches.size()
+          // find the substring in the substr
+          loc = matches[i].find(substr);
+          // if it's found
+          if (loc != string::npos) {
+            printHighlightedSubstr(matches[i], substr, loc);
+          }
         cout << " ";
+        }
       }
+      else {
+        for (int i = 0; i < matches.size(); i++) {
+          // find the substring in the substr
+          loc = matches[i].find(substr);
+          // if it's found
+          if (loc != string::npos) {
+            printHighlightedSubstr(matches[i], substr, loc);
+          }
+          cout << " ";
+        }
+      }
+      
       cout << fg::reset << endl << endl << endl << endl;
       if (matches.size() == 1) {
         cout << "done?" << endl;
@@ -367,7 +401,7 @@ int main() {
         /** 
          * TODO: create way to allow user to input 'Enter' to get definition from JSON
          * ? if (k == 13) 
-         *   ?  cout << items.value(); */ 
+         *   ?  printDefinition(); */ 
       }
     }
   }
