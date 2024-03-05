@@ -43,6 +43,7 @@
 
 using namespace std;
 using namespace rang;
+using json = nlohmann::json;
 
 consoleSize console_size; // used to store the size of console (width=cols and
                           // height=rows)
@@ -92,7 +93,7 @@ consoleSize console_size; // used to store the size of console (width=cols and
  *      vector<string> - holding all the matches to substring
  */
 
-vector<string> partialMatch(json myJson, string partialKey) {
+vector<string> partialMatch(const json& myJson, const string& partialKey) {
   // The substring you are looking for in the keys
     // if (argc == 1)
     //   partialKey = "axal";
@@ -105,10 +106,12 @@ vector<string> partialMatch(json myJson, string partialKey) {
     return matches;
   }
     //Iterate over all key-value pairs
-    for (auto &element : myJson.items()) {
-      string key = element.key();
+    for (const auto &element : myJson.items()) {
+      //string key = element.key();
+      std::string key = element.key();
     // Check if the key contains the partialKey substring
-      if (key.find(partialKey) != string::npos) {
+      //if (key.find(partialKey) != string::npos) {
+      if (key.substr(0, partialKey.length()) == partialKey) {
         // Found a match, do something with it
         // if (matches.size() <= 10)
         // {
@@ -276,10 +279,10 @@ void errorMessage(string message) {
  * Returns:
  *      string - definition of JSON object
 */
-// string printDefinition(json match)
-// {
-//   return match.value();
-// }
+string printDefinition(const json& myJson, const string match)
+{
+  return myJson[match];
+}
 
 int main() {
   console_size = getConsoleSize(); // get width and height of console
@@ -340,10 +343,14 @@ int main() {
       // Make sure a letter was pressed and only letter
       // TODO: add if matches.size() != 1 to !isalpha conditional
       // TODO: add else if(k == 13) check if done and call for definition
-      if (!isalpha(k)) {
+      if (!isalpha(k) && (int)k != 42) {
         errorMessage("Letters only!");
         continue;
       }
+      else if ((int)k == 42) {
+        cout << printDefinition(dictWord, matches[0]);
+      }
+
 
       // We know its a letter, lets make sure its lowercase.
       // Any letter with ascii value < 97 is capital so we
@@ -401,6 +408,8 @@ int main() {
       }
       
       cout << fg::reset << endl << endl << endl << endl;
+      // if (matches[0] == str && (k == getch()) == 42)
+      //   cout << printDefinition(dictWord, matches[0]);
       if (matches.size() == 1) {
         cout << "done?" << endl;
         // this isn't handled at all, just messin around
