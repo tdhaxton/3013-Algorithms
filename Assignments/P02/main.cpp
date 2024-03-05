@@ -36,10 +36,7 @@
 #include <fstream>
 #include <iostream>
 #include "loadJsonEx.hpp"
-// TODO: probably need to #include <fstream>
-// #include <time.h> (time.hpp removed for simplicity)
 #include <vector>
-// ? may need to #include <conio.h> to test for 'Enter' key input
 
 using namespace std;
 using namespace rang;
@@ -48,57 +45,22 @@ using json = nlohmann::json;
 consoleSize console_size; // used to store the size of console (width=cols and
                           // height=rows)
 
-/**
- * partialMatch
- *
- * Description:
- *      Finds partial matches in an array of strings and returns them. It
- *      doesn't matter where in the string the match is.
- * Params:
- *      vector<string>  array       - array to search
- *      string          substring   - substring to search for in each word
- *
- * Returns:
- *      vector<string> - holding all the matches to substring
- */
-/*vector<string> partialMatch(vector<string> array, string substring) {
-  vector<string> matches; // to hold any matches
-  size_t found;           // size_t is an integer position of
-                          // found item. -1 if its not found.
-
-  if (substring.size() == 0) {
-    return matches;
-  }
-
-  for (int i = 0; i < array.size(); i++) { // loop through array
-    found = array[i].find(substring);      // check for substr match
-    if (found != string::npos) {           // if found >= 0 (its found then)
-      matches.push_back(array[i]);         // add to matches
-    }
-  }
-
-  return matches;
-}
-*//*
+/*
 * partialMatch
 *
 * Description:
 *         Finds partial matches in an array of strings and returns them. It
- *      doesn't matter where in the string the match is.
+*         compares the input substring to the beginning of each word to find
+*         matches.
  * Params:
  *      json myJson                 - JSON file to search
  *      string partialKey           - substring to search for in each word
  *
  * Returns:
- *      vector<string> - holding all the matches to substring
+ *      vector<string>              - holds all the matches to partialKey
  */
 
 vector<string> partialMatch(const json& myJson, const string& partialKey) {
-  // The substring you are looking for in the keys
-    // if (argc == 1)
-    //   partialKey = "axal";
-    // else
-    //   partialKey = argv[1];
   vector<string> matches; // to hold any matches
   size_t found;           // size_t is an integer position of
                           // found item. -1 if it's not found
@@ -107,41 +69,14 @@ vector<string> partialMatch(const json& myJson, const string& partialKey) {
   }
     //Iterate over all key-value pairs
     for (const auto &element : myJson.items()) {
-      //string key = element.key();
-      std::string key = element.key();
+      string key = element.key();    // stores key value from JSON file
     // Check if the key contains the partialKey substring
-      //if (key.find(partialKey) != string::npos) {
       if (key.substr(0, partialKey.length()) == partialKey) {
         // Found a match, do something with it
-        // if (matches.size() <= 10)
-        // {
-          //cout << "Found partial match: " << key << " -> " << element.key() << endl; //!Changed to element.key from value
-          matches.push_back(element.key()); //!Changed to element.key from element.value
-        // }
+          matches.push_back(element.key()); // stores matches in vector
       }
     }
     return matches;
-    
-  // vector<string> arr;     // to hold json dictionary
-  // vector<string> matches; // to hold any matches
-  // size_t found;           // size_t is an integer position of
-  //                         // found item. -1 if its not found.
-
-  // if (substring.size() == 0) {
-  //   return matches;
-  // }
-  // for (const auto& item : array.items()) { // loop through array
-  //   arr.push_back(item.key());
-  // }
-  
-  // for (int i = 0; i < array.size(); i++) { // loop through array
-  //   found = arr[i].find(substring);      // check for substr match
-  //   if (found != string::npos) {           // if found >= 0 (its found then)
-  //     matches.push_back(arr[i]);       // add to matches
-  //   }
-  // }
-
-  // return matches;
 }
 
 
@@ -279,8 +214,7 @@ void errorMessage(string message) {
  * Returns:
  *      string - definition of JSON object
 */
-string printDefinition(const json& myJson, const string match)
-{
+string printDefinition(const json& myJson, const string match) {
   return myJson[match];
 }
 
@@ -289,33 +223,22 @@ int main() {
   char k;                          // holder for character being typed
   string key;                      // string version of char for printing
   string substr = "";              // var to concatenate letters to
-  /* 
-  TODO: Need to replace animals vector with appropriate method to input dictionary.json
-  ?Assume it will look something like: 
-  ?ifstream json("dictionary.json");
-  ? but it cout also be "vector<string> dictWord = loadJsonFile();"
-  ? loadJsonFile returns a json object...dictWord is a vector*/
-  //vector<string> animals = loadAnimalsFast(); // array of animal names
+
   json dictWord = loadJsonFile("./data/dictionary.json");   // JSON of dictionary values
-  // ! Make sure this comes out
-  // for (const auto& item : dictWord.items())
-  //   {
-  //       std::cout << item.key() << "\n";
-  //       for (const auto& val : item.value().items())
-  //       {
-  //           std::cout << "  " << val.key() << ": " << val.value() << "\n";
-  //       }
-  //   }
+  
   vector<string> matches; // any matches found in vector of animals
   int loc;                // location of substring to change its color
   bool deleting = false;
   string str = "";
+
   vector<string> mainMenu;
   mainMenu.push_back("Type letters and watch the results change.");
   mainMenu.push_back(
       "Hit the DEL key to erase a letter from your search string.");
   mainMenu.push_back(
       "When a single word is found, hit enter. (this is for real assignment.");
+  mainMenu.push_back(
+      "Press 'Enter' for the definition of the first word in the queue.");
   mainMenu.push_back(
       "Press 'Z' to exit.");
 
@@ -340,14 +263,13 @@ int main() {
       }
     } else {
       deleting = false;
-      // Make sure a letter was pressed and only letter
-      // TODO: add if matches.size() != 1 to !isalpha conditional
-      // TODO: add else if(k == 13) check if done and call for definition
-      if (!isalpha(k) && (int)k != 42) {
+      // Make sure only a letter or 'Enter' were pressed
+      if (!isalpha(k) && (int)k != 10) {
         errorMessage("Letters only!");
         continue;
       }
-      else if ((int)k == 42) {
+      // Return the definition of the leftmost word if 'Enter' is pressed
+      else if ((int)k == 10) {
         cout << printDefinition(dictWord, matches[0]);
       }
 
@@ -365,9 +287,6 @@ int main() {
 
     // Find any animals in the array that partially match
     // our substr word
-    // TODO: swap animals with dictWord
-    // ? dictWord needs to be vector, but might need to be json
-    //matches = partialMatch(animals, substr);
     matches = partialMatch(dictWord, substr);
 
     if ((int)k != 32) { // if k is not a space print it
@@ -383,9 +302,9 @@ int main() {
 
       for (auto &c : substr)
         c = tolower(c);
-      // This prints out all found matches
+      // This prints out the first 10 found matches, if there are more than 10
       if (matches.size() > 10){
-        for (int i = 0; i < 10; i++) {    // !changed loop to print out 10, instead of matches.size()
+        for (int i = 0; i < 10; i++) {
           // find the substring in the substr
           loc = matches[i].find(substr);
           // if it's found
@@ -395,6 +314,7 @@ int main() {
         cout << " ";
         }
       }
+      // If there are 10 or fewer matches, loop through remaining matches
       else {
         for (int i = 0; i < matches.size(); i++) {
           // find the substring in the substr
@@ -411,12 +331,7 @@ int main() {
       // if (matches[0] == str && (k == getch()) == 42)
       //   cout << printDefinition(dictWord, matches[0]);
       if (matches.size() == 1) {
-        cout << "done?" << endl;
-        // this isn't handled at all, just messin around
-        /** 
-         * TODO: create way to allow user to input 'Enter' to get definition from JSON
-         * ? if (k == 13) 
-         *   ?  printDefinition(); */ 
+        cout << "Press 'Enter' for the definition." << endl;
       }
     }
   }
