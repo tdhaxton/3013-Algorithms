@@ -99,6 +99,11 @@ vector<string> partialMatch(json myJson, string partialKey) {
     // else
     //   partialKey = argv[1];
   vector<string> matches; // to hold any matches
+  size_t found;           // size_t is an integer position of
+                          // found item. -1 if it's not found
+  if (partialKey.size() == 0) {
+    return matches;
+  }
     //Iterate over all key-value pairs
     for (auto &element : myJson.items()) {
       string key = element.key();
@@ -113,6 +118,7 @@ vector<string> partialMatch(json myJson, string partialKey) {
       }
     }
     return matches;
+    
   // vector<string> arr;     // to hold json dictionary
   // vector<string> matches; // to hold any matches
   // size_t found;           // size_t is an integer position of
