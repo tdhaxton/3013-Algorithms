@@ -28,7 +28,6 @@
  don't need any 3rd party dependencies.
  */
 
-#include "./headers/animals.hpp"
 #include "./headers/console.hpp"
 #include "./headers/json.hpp"
 #include "./headers/rang.hpp"
