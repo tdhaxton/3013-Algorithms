@@ -10,7 +10,7 @@
 |   2   | [loadJsonEx.hpp](loadJsonEx.hpp)        | Loads the dictionary.json file                                               |
 |   3   | [console.hpp](headers/console.hpp)      | Contains console functions and determines which libraries to use based on OS |
 |   4   | [json.hpp](headers/json.hpp)            | Contains JSON functions                                                      |
-|   5   | [rang.hpp](headers/rang.hpp)            | Provides a namespace for coloring test in the terminal                       |
+|   5   | [rang.hpp](headers/rang.hpp)            | Provides a namespace for coloring text in the terminal                       |
 |   6   | [dictionary.json](data/dictionary.json) | Contains dictionary file to be searched                                      |
 
 ### Instructions
@@ -19,7 +19,7 @@
 
 ![alt text](dictionaryTest_s.png)
 
-- As you can see from the image above, as we begin typing letters, the program shows all matches beginning with that letter.
+- As you can see from the image above, as we begin typing letters, the program shows the first 10 matches beginning with that letter.
 
 ![alt text](dictionaryTest_sun.png)
 
@@ -39,6 +39,8 @@
 
 ![alt text](dictionaryTest_sundries_return.png)
 
-- And the definition will, again, be displayed if they type 'Enter'. If the user types a capital 'Z', the program will exit, as seen below.
+- And the definition will, again, be displayed if they type 'Enter'. 
 
 ![alt text](dictionaryTest_capZ.png)
+
+-  If the user types a capital 'Z', the program will exit.
