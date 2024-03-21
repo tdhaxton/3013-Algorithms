@@ -13,10 +13,12 @@
  *      UpperCase Letters   = 65(A) -> 90(Z)
  *      Enter Key           = 10
  *      Space Bar           = 32
+ *      Escape              = 27
  *
  *      Arrow Keys          = Have same values as some letters
  *                            so we can't distinguish between
  *                            the two (in this context).
+ *                            Up = 72, Down = 80, Left = 75, Right = 77
  *
  * Code below is a basic example of using a "getch" function along with
  * searching an array of words for partial matches.
@@ -327,8 +329,7 @@ int main() {
       }
       
       cout << fg::reset << endl << endl << endl << endl;
-      // if (matches[0] == str && (k == getch()) == 42)
-      //   cout << printDefinition(dictWord, matches[0]);
+      
       if (matches.size() == 1) {
         cout << "Press 'Enter' for the definition." << endl;
       }

@@ -15,7 +15,8 @@
 #include <cstdio>   // For getchar()
 
 #ifdef _WIN32 // Windows specific includes
-#include <windows.h>
+//#include <windows.h>
+#include <conio.h>
 #else // Linux specific includes
 #include <termios.h>
 #include <unistd.h>
@@ -56,7 +57,10 @@ void clearConsole() {
 // Function to get a single character from console input
 char getch() {
 #ifdef _WIN32 // Windows implementation
-    return _getch();
+    char ch;
+    ch = getch();
+    return ch;
+    //return _getch();
 #else // Linux implementation
     struct termios oldt, newt;
     char ch;
