@@ -68,7 +68,7 @@ vector<string> partialMatch(const json& myJson, const string& partialKey) {
   if (partialKey.size() == 0) {
     return matches;
   }
-    //Iterate over all key-value pairs
+    // Iterate over all key-value pairs
     for (const auto &element : myJson.items()) {
       string key = element.key();    // stores key value from JSON file
     // Check if the key contains the partialKey substring
@@ -219,6 +219,65 @@ string printDefinition(const json& myJson, const string match) {
   return myJson[match];
 }
 
+/**
+ * captureArrows or highlight_choices
+ * 
+ * Description:
+ *      Highlights the leftmost matching word and changes which word is highlighted based on arrow key input
+ * Params:
+ *      None
+ * Returns:
+ *      Selected word
+*/
+// string captureArrows(string substr, vector<string> words)
+// {
+//   int ch, i = 0;
+//   string highlightedWord;
+
+//   cout << bg::yellow << style::underline << words[i] << fg::blue
+//        << style::reset;
+
+//   while((ch = getch()) != 27)
+//   {
+//     if (ch == '\033')
+//     {
+//       getch();
+//       switch(getch())
+//       {
+//         case 'A': // up arrow key
+//           if (i < words.size() - 1)
+//             cout << bg::yellow << style::underline << words[++i] << fg::blue
+//            << style::reset;
+//           break;
+//         case 'B': // Down arrow key
+//           if (i > 0)
+//             cout << bg::yellow << style::underline << words[--i] << fg::blue
+//            << style::reset;
+//           break;
+//         case 'C':  // Right arrow key
+//           if (i < words.size() - 1)
+//             cout << bg::yellow << style::underline << words[++i] << fg::blue
+//            << style::reset;
+//           break;
+//         case 'D':  // Left arrow kay
+//           if (i > 0)
+//             cout << bg::yellow << style::underline << words[--i] << fg::blue
+//            << style::reset;
+//           break;
+//         default:
+//           cout << "Press arrow keys to select a word and 'Enter' to get selected word's definition, "
+//                << "or press 'Escape' to continue inputting characters.\n";
+//           break;
+//       }
+//     }
+//     else if (ch == 27)  // ESC key to exit
+//         return substr;
+
+//     else if (ch == 10)
+//       return highlightedWord;
+//   }
+// }
+
 int main() {
   console_size = getConsoleSize(); // get width and height of console
   char k;                          // holder for character being typed
@@ -227,7 +286,7 @@ int main() {
 
   json dictWord = loadJsonFile("./data/dictionary.json");   // JSON of dictionary values
   
-  vector<string> matches; // any matches found in vector of animals
+  vector<string> matches; // any matches found in vector of words
   int loc;                // location of substring to change its color
   bool deleting = false;
   string str = "";
@@ -265,7 +324,7 @@ int main() {
     } else {
       deleting = false;
       // Make sure only a letter or 'Enter' were pressed
-      if (!isalpha(k) && (int)k != 10) {
+      if (!isalpha(k) && (int)k != 10/* && (int)k != 27*/) {
         errorMessage("Letters only!");
         continue;
       }
@@ -273,6 +332,10 @@ int main() {
       else if ((int)k == 10) {
         cout << printDefinition(dictWord, matches[0]);
       }
+      // Allow arrow key selection of displayed words if 'ESC' is pressed
+      // else if ((int)k == 27){
+      //   substr == captureArrows(substr, matches);
+      // }
 
 
       // We know its a letter, lets make sure its lowercase.
@@ -286,7 +349,7 @@ int main() {
     horizontalBar();
     printCurrent(k, substr);
 
-    // Find any animals in the array that partially match
+    // Find any words in the array that partially match
     // our substr word
     matches = partialMatch(dictWord, substr);
 
