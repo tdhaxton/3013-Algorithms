@@ -1,0 +1,2 @@
+# BSTvAVL - Balanced vs Unbalanced
+## Using given a given Binary Search Tree and a given AVL tree, this project compares the performance of a BST that is not actively balanced vs a tree that actively uses rotations to maintain a balanced tree.

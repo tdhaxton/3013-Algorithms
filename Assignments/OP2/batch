@@ -1,0 +1,3 @@
+./main f_minval=0 f_maxval=256 f_nums=256 s_runtype=randomMix s_bstdot=bstdot.256.dot s_avldot=avldot.256.dot
+./main f_minval=0 f_maxval=512 f_nums=512 s_runtype=randomMix s_bstdot=bstdot.512.dot s_avldot=avldot.512.dot
+./main f_minval=0 f_maxval=1024 f_nums=1024 s_runtype=randomMix s_bstdot=bstdot.1024.dot s_avldot=avldot.1024.dot
