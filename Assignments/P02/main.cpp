@@ -220,63 +220,79 @@ string printDefinition(const json& myJson, const string match) {
 }
 
 /**
- * captureArrows or highlight_choices
+ * captureArrows
  * 
  * Description:
  *      Highlights the leftmost matching word and changes which word is highlighted based on arrow key input
  * Params:
- *      None
+ *      User-input substring and vector of potential matches
  * Returns:
  *      Selected word
 */
-// string captureArrows(string substr, vector<string> words)
-// {
-//   int ch, i = 0;
-//   string highlightedWord;
+string captureArrows(vector<string> words)
+{
+  int ch, i = 0;
+  string highlightedWord;
 
-//   cout << bg::yellow << style::underline << words[i] << fg::blue
-//        << style::reset;
+  cout << bg::yellow << style::underline << words[i] << fg::blue
+       << style::reset;
 
-//   while((ch = getch()) != 27)
-//   {
-//     if (ch == '\033')
-//     {
-//       getch();
-//       switch(getch())
-//       {
-//         case 'A': // up arrow key
-//           if (i < words.size() - 1)
-//             cout << bg::yellow << style::underline << words[++i] << fg::blue
-//            << style::reset;
-//           break;
-//         case 'B': // Down arrow key
-//           if (i > 0)
-//             cout << bg::yellow << style::underline << words[--i] << fg::blue
-//            << style::reset;
-//           break;
-//         case 'C':  // Right arrow key
-//           if (i < words.size() - 1)
-//             cout << bg::yellow << style::underline << words[++i] << fg::blue
-//            << style::reset;
-//           break;
-//         case 'D':  // Left arrow kay
-//           if (i > 0)
-//             cout << bg::yellow << style::underline << words[--i] << fg::blue
-//            << style::reset;
-//           break;
-//         default:
-//           cout << "Press arrow keys to select a word and 'Enter' to get selected word's definition, "
-//                << "or press 'Escape' to continue inputting characters.\n";
-//           break;
-//       }
-//     }
-//     else if (ch == 27)  // ESC key to exit
-//         return substr;
-
-//     else if (ch == 10)
-//       return highlightedWord;
-//   }
-// }
+  while((ch = getch()) != 27)
+  {
+    if (ch == '\033')
+    {
+      getch();
+      switch(getch())
+      {
+        case 'A': // up arrow key
+          if (i < words.size() - 1){
+            i++;
+            cout << bg::yellow << style::underline << words[i] << fg::blue
+                 << style::reset;
+          }
+          else
+            cout << bg::yellow << style::underline << words[i] << fg::blue
+                 << style::reset;
+          break;
+        case 'B': // Down arrow key
+          if (i > 0){
+            i--;
+            cout << bg::yellow << style::underline << words[i] << fg::blue
+                 << style::reset;
+          }
+          else
+            cout << bg::yellow << style::underline << words[i] << fg::blue
+                 << style::reset;
+          break;
+        case 'C':  // Right arrow key
+          if (i < words.size() - 1){
+            i++;
+            cout << bg::yellow << style::underline << words[i] << fg::blue
+                 << style::reset;
+          }
+          else
+            cout << bg::yellow << style::underline << words[i] << fg::blue
+                 << style::reset;
+          break;
+        case 'D':  // Left arrow kay
+          if (i > 0){
+            i--;
+            cout << bg::yellow << style::underline << words[i] << fg::blue
+                 << style::reset;
+          }
+          else
+            cout << bg::yellow << style::underline << words[i] << fg::blue
+                 << style::reset;
+          break;
+        default:
+          cout << "Press arrow keys to select a word and 'Enter' to get selected word's definition, "
+               << "or press 'Escape' to continue inputting characters.\n";
+      }
+    }
+    highlightedWord = words[i];
+  }
+  return highlightedWord;
+}
 
 int main() {
   console_size = getConsoleSize(); // get width and height of console
@@ -324,7 +340,7 @@ int main() {
     } else {
       deleting = false;
       // Make sure only a letter or 'Enter' were pressed
-      if (!isalpha(k) && (int)k != 10/* && (int)k != 27*/) {
+      if (!isalpha(k) && (int)k != 10 && (int)k != 27) {
         errorMessage("Letters only!");
         continue;
       }
@@ -333,9 +349,9 @@ int main() {
         cout << printDefinition(dictWord, matches[0]);
       }
       // Allow arrow key selection of displayed words if 'ESC' is pressed
-      // else if ((int)k == 27){
-      //   substr == captureArrows(substr, matches);
-      // }
+      else if ((int)k == 27){
+        substr == captureArrows(matches);
+      }
 
 
       // We know its a letter, lets make sure its lowercase.
