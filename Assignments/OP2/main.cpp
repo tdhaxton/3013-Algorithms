@@ -9,7 +9,7 @@
 #include <vector>
 #include <fstream>
 
-
+//TODO: Research best place to input comparison accumulator
 using namespace std;
 
 std::map<std::string, float> floatArgs;
@@ -25,14 +25,15 @@ std::map<std::string, std::string> stringArgs;
 void parseArguments(int argc, char** argv) {
     for (int i = 1; i < argc; ++i) {
         std::string arg = argv[i];
-        auto pos = arg.find('=');
+        auto pos = arg.find('=');  // gets position of '=' in the string
         if (pos == std::string::npos) continue;  // skip if no '=' found
 
-        std::string key = arg.substr(0, pos);
-        std::string value = arg.substr(pos + 1);
+        std::string key = arg.substr(0, pos);  // gets the substring from first character of string to pos
+        std::string value = arg.substr(pos + 1);    // gets the substring from pos to end of string/null (\0) character
 
         if (key.size() < 3) continue;  // minimum length for f_x or s_x
 
+        // reads f_ or s_ to determine if it's a string or a float type
         std::string typePrefix = key.substr(0, 2);
         std::string actualKey = key.substr(2);
 
