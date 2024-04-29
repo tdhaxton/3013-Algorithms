@@ -6,7 +6,7 @@ using namespace std;
 
 
 struct Node {
-    int key;
+    int key, comps = 0;
     Node *left;
     Node *right;
     Node(int key) : key(key), left(nullptr), right(nullptr) {}
@@ -16,7 +16,7 @@ class BinarySearchTree {
 
 protected:
     Node *root;
-
+    int comparisons = 0;
 
     void toDotFormat(Node *node, std::stringstream &stream) const {
         if (!node) return;
@@ -45,13 +45,21 @@ protected:
         
     }
 
+    int getComps(Node* node){
+        return node->comps;
+    }
+
     // Function to insert a new key into the BST
     virtual Node *insert(Node *&node, int key) {
         if (!node) {
             node = new Node(key);
         } else if (key < node->key) {
+            comparisons++;
+            node->comps++;
             node->left = insert(node->left, key);
         } else if (key > node->key) {
+            comparisons++;
+            node->comps++;
             node->right = insert(node->right, key);
         }
         return node;
@@ -70,16 +78,31 @@ protected:
     bool search(Node *node, int key) {
         // Base Cases: root is null or key is present at root
         if (node == nullptr)
+        {
             return false;
+        }
         else if (node->key == key)
+        {
+            comparisons++;
+            node->comps++;
             return true;
+        }
 
         // Key is greater than root's key
-        if (node->key < key)
+        else if (node->key < key)
+        {
+            comparisons++;
+            node->comps++;
             return search(node->right, key);
+        }
 
         // Key is smaller than root's key
-        return search(node->left, key);
+        else
+        {
+            comparisons++;
+            node->comps++;
+            return search(node->left, key);
+        }
     }
 
 public:
@@ -112,5 +135,13 @@ public:
 
         stream << "}\n";
         return stream.str();
+    }
+
+    int getComps(){
+        return getComps(root);
+    }
+
+    int getComparisons(){
+        return comparisons;
     }
 };

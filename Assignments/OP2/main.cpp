@@ -10,6 +10,7 @@
 #include <fstream>
 
 //TODO: Research best place to input comparison accumulator
+//TODO: Output comparison variable to file
 using namespace std;
 
 std::map<std::string, float> floatArgs;
@@ -100,7 +101,7 @@ int main(int argc, char** argv) {
     AVLTree avl;
 
     // //vector<int> nums = generateRandomUniqueShuffle(262144,0,262144);
-    // vector<int> nums = generateRandomUniqueShuffle(32768,0,32768);
+    //vector<int> treeNums = generateRandomUniqueShuffle(32768,0,32768);
     //./main f_minval=0 f_maxval=256 f_nums=256 s_runtype=randomMix s_output=run0.256.256.txt 
     vector<int> treeNums = generateRandomUniqueShuffle(floatArgs["nums"],floatArgs["minval"],floatArgs["maxval"]);
 
@@ -124,8 +125,12 @@ int main(int argc, char** argv) {
     //     std::cout << "Element " << key << " not found in the BST." << std::endl;
     // }
 
-    cout<<"Height:"<<bst.treeHeight()<<endl;
-    cout<<"Height:"<<avl.treeHeight()<<endl;
+    cout<<"BST Height:"<<bst.treeHeight()<<endl;
+    cout<<"AVL Height:"<<avl.treeHeight()<<endl;
+    cout<<"BST Comparisons:"<<bst.getComps()<<endl;
+    cout<<"BST \"Comparisons\":"<<bst.getComparisons()<<endl;
+    cout<<"AVL Comparisons:"<<avl.getComps()<<endl;
+    cout<<"AVL \"Comparisons\":"<<avl.getComparisons()<<endl;
     
     ofstream foutBST;
     foutBST.open("data/"+stringArgs["bstdot"]);
