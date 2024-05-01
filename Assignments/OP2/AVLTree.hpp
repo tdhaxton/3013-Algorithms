@@ -15,28 +15,16 @@ protected:
 
     int getBalance(Node* node) {
         if (!node)
-        {
             return 0;
-        }
-        comparisons++;
-        node->comps++;
         return height(node->left) - height(node->right);
     }
 
     Node* rotateRight(Node* y) {
-        comparisons++;
-        y->comps++;
         Node* x = y->left;
-        comparisons++;
-        y->comps++;
         Node* T2 = x->right;
 
         // Perform rotation
-        comparisons++;
-        y->comps++;
         x->right = y;
-        comparisons++;
-        y->comps++;
         y->left = T2;
 
         // Update heights
@@ -48,19 +36,11 @@ protected:
     }
 
     Node* rotateLeft(Node* x) {
-        comparisons++;
-        x->comps++;
         Node* y = x->right;
-        comparisons++;
-        x->comps++;
         Node* T2 = y->left;
 
         // Perform rotation
-        comparisons++;
-        x->comps++;
         y->left = x;
-        comparisons++;
-        x->comps++;
         x->right = T2;
 
         // Update heights
@@ -72,28 +52,16 @@ protected:
     }
 
     Node* insert(Node* &node, int key) override {
+        comps++;
         // 1. Perform the normal BST insertion
         if (!node)
-        {
             return new AVLNode(key);
-        }
 
-        if (key < node->key)
-        {
-            comparisons++;
-            node->comps++;
+        if (key < node->key) {
             node->left = insert(node->left, key);
-        }
-        else if (key > node->key)
-        {
-            comparisons++;
-            node->comps++;
+        } else if (key > node->key) {
             node->right = insert(node->right, key);
-        }
-        else
-        {
-            comparisons++;
-            node->comps++;
+        } else {
             return node;
         }
 
@@ -108,43 +76,99 @@ protected:
 
         // Left Left Case
         if (balance > 1 && key < node->left->key)
-        {
-            comparisons = comparisons + 2;
-            node->comps = node->comps + 2;
             return rotateRight(node);
-        }
 
         // Right Right Case
         if (balance < -1 && key > node->right->key)
-        {
-            comparisons = comparisons = 2;
-            node->comps = node->comps + 2;
             return rotateLeft(node);
-        }
 
         // Left Right Case
         if (balance > 1 && key > node->left->key) {
-            comparisons = comparisons + 2;
-            node->comps = node->comps + 2;
             node->left = rotateLeft(node->left);
             return rotateRight(node);
         }
 
         // Right Left Case
         if (balance < -1 && key < node->right->key) {
-            comparisons = comparisons + 2;
-            node->comps = node->comps + 2;
             node->right = rotateRight(node->right);
             return rotateLeft(node);
         }
 
-        comparisons++;
-        node->comps++;
         return node;
     }
 
+    // Function to delete a node from the AVL tree
+    Node* remove(Node* &root, int key) override {
+        comps++;
+        // Perform standard BST delete
+        if (root == nullptr)
+            return root;
+
+        if (key < root->key) {
+            root->left = remove(root->left, key);
+        } else if (key > root->key) {
+            root->right = remove(root->right, key);
+        } else {
+            // Node to be deleted found
+            if (root->left == nullptr || root->right == nullptr) {
+                Node* temp = root->left ? root->left : root->right;
+                if (temp == nullptr) {
+                    temp = root;
+                    root = nullptr;
+                } else
+                    *root = *temp;
+                delete temp;
+            } else {
+                // Node with two children: Get the inorder successor
+                Node* temp = root->right;
+                while (temp->left != nullptr)
+                    temp = temp->left;
+                root->key = temp->key;
+                root->right = remove(root->right, temp->key);
+            }
+        }
+
+        // If the tree had only one node, then return
+        if (root == nullptr)
+            return root;
+
+        // Update height of the current node
+        static_cast<AVLNode*>(root)->height = 1 + max(height(root->left), height(root->right));
+
+        // Get balance factor and balance the tree if needed
+        int balance = getBalance(root);
+
+        // Left Left Case
+        if (balance > 1 && getBalance(root->left) >= 0)
+            return rotateRight(root);
+
+        // Left Right Case
+        if (balance > 1 && getBalance(root->left) < 0) {
+            root->left = rotateLeft(root->left);
+            return rotateRight(root);
+        }
+
+        // Right Right Case
+        if (balance < -1 && getBalance(root->right) <= 0)
+            return rotateLeft(root);
+
+        // Right Left Case
+        if (balance < -1 && getBalance(root->right) > 0) {
+            root->right = rotateRight(root->right);
+            return rotateLeft(root);
+        }
+
+        return root;
+    }
+
 public:
+    // Public insert method
     void insert(int key) override {
         root = insert(root, key);
+    }
+
+    // Public delete method
+    void remove(int key) override {
+        root = remove(root, key);
     }
 };

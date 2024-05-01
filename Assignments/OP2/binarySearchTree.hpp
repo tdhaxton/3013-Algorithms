@@ -6,7 +6,7 @@ using namespace std;
 
 
 struct Node {
-    int key, comps = 0;
+    int key;
     Node *left;
     Node *right;
     Node(int key) : key(key), left(nullptr), right(nullptr) {}
@@ -16,7 +16,7 @@ class BinarySearchTree {
 
 protected:
     Node *root;
-    int comparisons = 0;
+    int comps = 0;
 
     void toDotFormat(Node *node, std::stringstream &stream) const {
         if (!node) return;
@@ -37,29 +37,24 @@ protected:
         }
     }
 
-    int treeHeight(Node* node){
-        if(!node){
+    int treeHeight(Node* node) {
+        if(!node) {
             return 0;
         }
         return 1 + max(treeHeight(node->left), treeHeight(node->right));
         
     }
 
-    int getComps(Node* node){
-        return node->comps;
-    }
-
     // Function to insert a new key into the BST
     virtual Node *insert(Node *&node, int key) {
+
         if (!node) {
             node = new Node(key);
         } else if (key < node->key) {
-            comparisons++;
-            node->comps++;
+            comps++;
             node->left = insert(node->left, key);
         } else if (key > node->key) {
-            comparisons++;
-            node->comps++;
+            comps++;
             node->right = insert(node->right, key);
         }
         return node;
@@ -74,35 +69,72 @@ protected:
         }
     }
 
+    // find the in-order successor
+    Node *inOrderNode(Node *node) {
+        Node *current = node;
+
+        // find the leftmost leaf
+        while (current && current->left != NULL)
+            current = current->left;
+
+        return current;
+    }
+
+
+    // Function to delete a node from the BST
+    virtual Node *remove(Node *&node, int key) {
+        comps++;
+        // Returns if the tree is empty
+        if (!node)
+            return node;
+
+        // Find the node to be deleted
+        if (key < node->key) {
+            node->left = remove(node->left, key);
+        }
+        else if(key > node->key) {
+            node->right = remove(node->right, key);
+        }
+        else {
+        // If the node is with only one child or no child
+            if (!node->left)
+            {
+                Node* temp = node->right;
+                free(node);
+                return temp;
+            }
+            else if (!node->right)
+            {
+                Node *temp = node->left;
+                free(node);
+                return temp;
+            }
+            // If the node has two children
+            Node *temp = inOrderNode(node->right);
+            // Place the in-order successor in position of the node to be deleted
+            node->key = temp->key;
+            // Delete the in-order successor
+            node->right = remove(node->right, temp->key);
+        }
+        return root;
+    }
     // Function to search a given key in a given BST
     bool search(Node *node, int key) {
+        comps++;    
         // Base Cases: root is null or key is present at root
-        if (node == nullptr)
-        {
+        if (!node)
             return false;
-        }
+        
         else if (node->key == key)
-        {
-            comparisons++;
-            node->comps++;
             return true;
-        }
 
         // Key is greater than root's key
         else if (node->key < key)
-        {
-            comparisons++;
-            node->comps++;
             return search(node->right, key);
-        }
-
+            
         // Key is smaller than root's key
         else
-        {
-            comparisons++;
-            node->comps++;
             return search(node->left, key);
-        }
     }
 
 public:
@@ -110,8 +142,13 @@ public:
     virtual void insert(int key) {
         insert(root, key);
     }
+
     void inorder() {
         inorder(root);
+    }
+
+    virtual void remove(int key) {
+        root = remove(root, key);
     }
 
     bool search(int key) {
@@ -138,10 +175,6 @@ public:
     }
 
     int getComps(){
-        return getComps(root);
-    }
-
-    int getComparisons(){
-        return comparisons;
+        return comps;
     }
 };

@@ -9,8 +9,6 @@
 #include <vector>
 #include <fstream>
 
-//TODO: Research best place to input comparison accumulator
-//TODO: Output comparison variable to file
 using namespace std;
 
 std::map<std::string, float> floatArgs;
@@ -100,37 +98,88 @@ int main(int argc, char** argv) {
     BinarySearchTree bst;
     AVLTree avl;
 
-    // //vector<int> nums = generateRandomUniqueShuffle(262144,0,262144);
-    //vector<int> treeNums = generateRandomUniqueShuffle(32768,0,32768);
-    //./main f_minval=0 f_maxval=256 f_nums=256 s_runtype=randomMix s_output=run0.256.256.txt 
-    vector<int> treeNums = generateRandomUniqueShuffle(floatArgs["nums"],floatArgs["minval"],floatArgs["maxval"]);
+    //vector<int> nums = generateRandomUniqueShuffle(262144,0,262144);
+    vector<int> treeNums = generateRandomUniqueShuffle(32768,0,32768);
+    //./main f_minval=0 f_maxval=256 f_nums=256 s_runtype=randomMix s_bstdot=bstdot.256.dot s_avldot=avldot.256.dot
+    // // Generate random numbers for each tree
+    // vector<int> treeNums = generateRandomUniqueShuffle(floatArgs["nums"],floatArgs["minval"],floatArgs["maxval"]);
 
+    // // Generate random numbers to search for in each tree
+    // vector<int> treeSearches = generateRandomUniqueShuffle(floatArgs["nums"],floatArgs["minval"],floatArgs["maxval"]);
 
-    // Insert values into BST
+    // // Generate random numbers delete from each tree, if found
+    // vector<int> treeDeletions = generateRandomUniqueShuffle(floatArgs["nums"],floatArgs["minval"],floatArgs["maxval"]);
+
+    // Insert values into BST and AVL Tree
     for(int i = 0; i < treeNums.size(); i++){
         bst.insert(treeNums[i]);
         avl.insert(treeNums[i]);
     }
+
+    // // Logic for randomMix, max insertions, max deletions, and max searches
+    // if (stringArgs["runtype"] == "randomMix") {
+        
+    //    // Search each tree for random values
+    //     for(int i = 0; i < treeSearches.size(); i++){
+    //         bst.search(treeSearches[i]);
+    //         avl.search(treeSearches[i]);
+    //     }
+
+    //     // Delete random values from each tree
+    //     for(int i = 0; i < treeDeletions.size(); i++){
+    //         bst.remove(treeDeletions[i]);
+    //         avl.remove(treeDeletions[i]);
+    //     }
+
+    // } else if (stringArgs["runtype"] == "deletions") {
+
+    //     // Delete random values from each tree
+    //     for(int i = 0; i < treeDeletions.size(); i++){
+    //         bst.remove(treeDeletions[i]);
+    //         avl.remove(treeDeletions[i]);
+    //     }
+
+    // } else if (stringArgs["runtype"] == "searches") {
+
+    //     // Search each tree for random values
+    //     for(int i = 0; i < treeSearches.size(); i++){
+    //         bst.search(treeSearches[i]);
+    //         avl.search(treeSearches[i]);
+    //     }
+
+    // }
 
     // Print in-order traversal of the BST
     // std::cout << "Inorder traversal of the BST: ";
     // bst.inorder();
     // std::cout << std::endl;
 
-    // // Search for a key in the BST
-    // int key = 40;
-    // if (bst.search(key)) {
-    //     std::cout << "Element " << key << " found in the BST." << std::endl;
-    // } else {
-    //     std::cout << "Element " << key << " not found in the BST." << std::endl;
-    // }
+    // Search for a key in the BST
+    int key = 40;
+        
+    while (key != 0) {
+        if (bst.search(key)) {
+            std::cout << "Element " << key << " found in the BST." << std::endl;
+            bst.remove(key);
+        } else {
+            std::cout << "Element " << key << " not found in the BST." << std::endl;
+        }
+
+        if (avl.search(key)) {
+            std::cout << "Element " << key << " found in the AVL." << std::endl;
+            avl.remove(key);
+        } else {
+            std::cout << "Element " << key << " not found in the AVL." << std::endl;
+        }
+
+        cout << "Enter a key: ";
+        cin >> key;
+    }
 
     cout<<"BST Height:"<<bst.treeHeight()<<endl;
     cout<<"AVL Height:"<<avl.treeHeight()<<endl;
     cout<<"BST Comparisons:"<<bst.getComps()<<endl;
-    cout<<"BST \"Comparisons\":"<<bst.getComparisons()<<endl;
     cout<<"AVL Comparisons:"<<avl.getComps()<<endl;
-    cout<<"AVL \"Comparisons\":"<<avl.getComparisons()<<endl;
     
     ofstream foutBST;
     foutBST.open("data/"+stringArgs["bstdot"]);
