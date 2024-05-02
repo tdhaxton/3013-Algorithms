@@ -19,6 +19,11 @@ protected:
         return height(node->left) - height(node->right);
     }
 
+    // updateHeight method to simplify code  //! New change (Lines 22 - 25 added)
+    int updateHeight(Node* z) {
+        static_cast<AVLNode*>(z)->height = treeHeight(z);
+    }
+
     Node* rotateRight(Node* y) {
         Node* x = y->left;
         Node* T2 = x->right;
@@ -28,8 +33,10 @@ protected:
         y->left = T2;
 
         // Update heights
-        static_cast<AVLNode*>(y)->height = max(height(y->left), height(y->right)) + 1;
-        static_cast<AVLNode*>(x)->height = max(height(x->left), height(x->right)) + 1;
+        // static_cast<AVLNode*>(y)->height = max(height(y->left), height(y->right)) + 1;   //! lines 36 - 39 changed
+        // static_cast<AVLNode*>(x)->height = max(height(x->left), height(x->right)) + 1;
+        updateHeight(y);
+        updateHeight(x);
 
         // Return new root
         return x;
@@ -44,8 +51,10 @@ protected:
         x->right = T2;
 
         // Update heights
-        static_cast<AVLNode*>(x)->height = max(height(x->left), height(x->right)) + 1;
-        static_cast<AVLNode*>(y)->height = max(height(y->left), height(y->right)) + 1;
+        // static_cast<AVLNode*>(x)->height = max(height(x->left), height(x->right)) + 1;   //! lines 54 - 57 changed
+        // static_cast<AVLNode*>(y)->height = max(height(y->left), height(y->right)) + 1;
+        updateHeight(x);
+        updateHeight(y);
 
         // Return new root
         return y;
@@ -66,7 +75,8 @@ protected:
         }
 
         // 2. Update height of this ancestor node
-        static_cast<AVLNode*>(node)->height = 1 + max(height(node->left), height(node->right));
+        // static_cast<AVLNode*>(node)->height = 1 + max(height(node->left), height(node->right));  //! lines 78 - 79
+        updateHeight(node);
 
         // 3. Get the balance factor of this ancestor node to check whether
         // this node became unbalanced
@@ -133,7 +143,8 @@ protected:
             return root;
 
         // Update height of the current node
-        static_cast<AVLNode*>(root)->height = 1 + max(height(root->left), height(root->right));
+        // static_cast<AVLNode*>(root)->height = 1 + max(height(root->left), height(root->right));  //! lines 146 - 147 changed
+        updateHeight(root);
 
         // Get balance factor and balance the tree if needed
         int balance = getBalance(root);

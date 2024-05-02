@@ -98,7 +98,7 @@ int main(int argc, char** argv) {
     BinarySearchTree bst;
     AVLTree avl;
 
-    // bst.insert(8);
+    // bst.insert(8);                   //! Lines 101 - 130 added for troubleshooting
     // bst.insert(6);
     // bst.insert(7);
     // bst.insert(5);
@@ -130,10 +130,10 @@ int main(int argc, char** argv) {
     
 
     //vector<int> nums = generateRandomUniqueShuffle(262144,0,262144);
-    vector<int> treeNums = generateRandomUniqueShuffle(15,0,32768);
-    //./main f_minval=0 f_maxval=256 f_nums=256 s_runtype=randomMix s_bstdot=bstdot.256.dot s_avldot=avldot.256.dot
+    vector<int> treeNums = generateRandomUniqueShuffle(15,0,32768); //! Cut this
+    //./main f_minval=0 f_maxval=256 f_nums=256 s_runtype=randomMix s_bstdot=bstdot.256.dot s_avldot=avldot.256.dot //! Command line template
     // // Generate random numbers for each tree
-    // vector<int> treeNums = generateRandomUniqueShuffle(floatArgs["nums"],floatArgs["minval"],floatArgs["maxval"]);
+    // vector<int> treeNums = generateRandomUniqueShuffle(floatArgs["nums"],floatArgs["minval"],floatArgs["maxval"]); //! readd 135 - 142
 
     // // Generate random numbers to search for in each tree
     // vector<int> treeSearches = generateRandomUniqueShuffle(floatArgs["nums"],floatArgs["minval"],floatArgs["maxval"]);
@@ -142,12 +142,19 @@ int main(int argc, char** argv) {
     // vector<int> treeDeletions = generateRandomUniqueShuffle(floatArgs["nums"],floatArgs["minval"],floatArgs["maxval"]);
 
     // Insert values into BST and AVL Tree
-    for(int i = 0; i < treeNums.size(); i++){
+    for(int i = 0; i < treeNums.size(); i++) {
         bst.insert(treeNums[i]);
         avl.insert(treeNums[i]);
     }
 
-    bst.insert(32769);
+    //! Loop to output treeNums to console for troubleshooting
+    cout << "Contents of treeNums vector: " << endl;
+    for(int i = 0; i < treeNums.size(); i++) {
+        cout << treeNums[i] << " ";
+    }
+    cout << endl;
+
+    bst.insert(32769);  //! Lines 150 - 151 added for troubleshooting
     avl.insert(32769);
 
     // // Logic for randomMix, max insertions, max deletions, and max searches
@@ -188,19 +195,19 @@ int main(int argc, char** argv) {
     bst.inorder();
     std::cout << std::endl;
 
-    cout<<bst.toDotFormat();
-    cout<<avl.toDotFormat();
+    cout<<bst.toDotFormat();    //! Added for troubleshooting
+    cout<<avl.toDotFormat();    //! Added for troubleshooting
 
     // Search for a key in the BST
     int key = 40;
         
     while (key != 0) {
-        if (bst.search(key)) {
-            std::cout << "Element " << key << " found in the BST." << std::endl;
-            bst.remove(key);
-        } else {
-            std::cout << "Element " << key << " not found in the BST." << std::endl;
-        }
+        // if (bst.search(key)) {
+        //     std::cout << "Element " << key << " found in the BST." << std::endl;
+        //     bst.remove(key);
+        // } else {
+        //     std::cout << "Element " << key << " not found in the BST." << std::endl;
+        // }
 
         if (avl.search(key)) {
             std::cout << "Element " << key << " found in the AVL." << std::endl;
@@ -208,8 +215,8 @@ int main(int argc, char** argv) {
         } else {
             std::cout << "Element " << key << " not found in the AVL." << std::endl;
         }
-        bst.inorder();
-        cout << endl;
+        // bst.inorder();
+        // cout << endl;
         avl.inorder();
         cout << endl;
 
