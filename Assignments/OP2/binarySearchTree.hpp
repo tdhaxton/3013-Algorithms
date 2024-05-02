@@ -29,11 +29,17 @@ protected:
             stream << "    " << node->key << " -- " << node->left->key << ";\n";
             toDotFormat(node->left, stream);
         }
+        else {
+            stream << "    " << node->key << " -- " << -node->key << " [label=\"\" shape=point] ;\n";
+        }
 
         // Output the connection to the right child if it exists
         if (node->right) {
             stream << "    " << node->key << " -- " << node->right->key << ";\n";
             toDotFormat(node->right, stream);
+        }
+        else {
+            stream << "    " << node->key << " -- " << -node->key << " [label=\"\" shape=point] ;\n";
         }
     }
 
@@ -47,14 +53,12 @@ protected:
 
     // Function to insert a new key into the BST
     virtual Node *insert(Node *&node, int key) {
-
+        comps++;
         if (!node) {
             node = new Node(key);
         } else if (key < node->key) {
-            comps++;
             node->left = insert(node->left, key);
         } else if (key > node->key) {
-            comps++;
             node->right = insert(node->right, key);
         }
         return node;
@@ -80,9 +84,29 @@ protected:
         return current;
     }
 
+    // Function to search a given key in a given BST
+    bool search(Node *node, int key) {
+        comps++;    
+        // Base Cases: root is null or key is present at root
+        if (!node)
+            return false;
+        
+        else {
+            if (node->key == key)
+                return true;
+
+            // Key is greater than root's key
+            else if (node->key < key)
+                return search(node->right, key);
+
+            // Key is smaller than root's key
+            else
+                return search(node->left, key);
+        }
+    }
 
     // Function to delete a node from the BST
-    virtual Node *remove(Node *&node, int key) {
+    virtual Node* remove(Node* &node, int key) {
         comps++;
         // Returns if the tree is empty
         if (!node)
@@ -99,14 +123,14 @@ protected:
         // If the node is with only one child or no child
             if (!node->left)
             {
-                Node* temp = node->right;
-                free(node);
+                Node *temp = node->right;
+                delete node;
                 return temp;
             }
             else if (!node->right)
             {
                 Node *temp = node->left;
-                free(node);
+                delete node;
                 return temp;
             }
             // If the node has two children
@@ -117,24 +141,6 @@ protected:
             node->right = remove(node->right, temp->key);
         }
         return root;
-    }
-    // Function to search a given key in a given BST
-    bool search(Node *node, int key) {
-        comps++;    
-        // Base Cases: root is null or key is present at root
-        if (!node)
-            return false;
-        
-        else if (node->key == key)
-            return true;
-
-        // Key is greater than root's key
-        else if (node->key < key)
-            return search(node->right, key);
-            
-        // Key is smaller than root's key
-        else
-            return search(node->left, key);
     }
 
 public:
