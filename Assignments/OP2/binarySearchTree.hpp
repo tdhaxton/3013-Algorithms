@@ -115,12 +115,46 @@ protected:
         // Find the node to be deleted
         if (key < node->key) {
             node->left = remove(node->left, key);
+            return node;
         }
-        else if(key > node->key) {
+        else if (key > node->key) {
             node->right = remove(node->right, key);
+            return node;
         }
         else {
-        // If the node is with only one child or no child
+            // If key is same as root's key, then this is the node to be deleted
+            // Node with only one child or no child
+            if (node->left == NULL) {
+                Node* temp = node->right;
+                delete node;
+                return temp;
+            }
+            else if (node->right == NULL) {
+                Node* temp = node->left;
+                delete node;
+                return temp;
+            }
+
+            // // Node with two children: Get the inorder successor
+            // // (smallest in the right subtree)
+            // Node* succParent = node;
+            // Node* succ = node->right;
+            // while (succ->left != NULL) {
+            //     succParent = succ;
+            //     succ = succ->left;
+            // }
+
+            // // Copy the inorder successor's content to this node
+            // node->key = succ->key;
+
+            // // Delete the inorder successor
+            // if (succParent->left == succ)
+            //     succParent->left = succ->right;
+            // else
+            //     succParent->right = succ->right;
+            
+            // delete succ;
+            // return node;
             if (!node->left)
             {
                 Node *temp = node->right;
@@ -140,7 +174,7 @@ protected:
             // Delete the in-order successor
             node->right = remove(node->right, temp->key);
         }
-        return root;
+        return node;
     }
 
 public:

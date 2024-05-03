@@ -20,7 +20,7 @@ protected:
     }
 
     // updateHeight method to simplify code  //! New change (Lines 22 - 25 added)
-    int updateHeight(Node* z) {
+    void updateHeight(Node* z) {
         static_cast<AVLNode*>(z)->height = treeHeight(z);
     }
 

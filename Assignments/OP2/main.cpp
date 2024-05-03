@@ -130,16 +130,17 @@ int main(int argc, char** argv) {
     
 
     //vector<int> nums = generateRandomUniqueShuffle(262144,0,262144);
-    vector<int> treeNums = generateRandomUniqueShuffle(15,0,32768); //! Cut this
+    // vector<int> treeNums = generateRandomUniqueShuffle(32768,0,32768); //! Cut this
     //./main f_minval=0 f_maxval=256 f_nums=256 s_runtype=randomMix s_bstdot=bstdot.256.dot s_avldot=avldot.256.dot //! Command line template
-    // // Generate random numbers for each tree
-    // vector<int> treeNums = generateRandomUniqueShuffle(floatArgs["nums"],floatArgs["minval"],floatArgs["maxval"]); //! readd 135 - 142
+    
+    // Generate random numbers for each tree
+    vector<int> treeNums = generateRandomUniqueShuffle(floatArgs["nums"],floatArgs["minval"],floatArgs["maxval"]); //! readd 135 - 142
 
-    // // Generate random numbers to search for in each tree
-    // vector<int> treeSearches = generateRandomUniqueShuffle(floatArgs["nums"],floatArgs["minval"],floatArgs["maxval"]);
+    // Generate random numbers to search for in each tree
+    vector<int> treeSearches = generateRandomUniqueShuffle(floatArgs["nums"],floatArgs["minval"],floatArgs["maxval"]);
 
-    // // Generate random numbers delete from each tree, if found
-    // vector<int> treeDeletions = generateRandomUniqueShuffle(floatArgs["nums"],floatArgs["minval"],floatArgs["maxval"]);
+    // Generate random numbers delete from each tree, if found
+    vector<int> treeDeletions = generateRandomUniqueShuffle(floatArgs["nums"],floatArgs["minval"],floatArgs["maxval"]);
 
     // Insert values into BST and AVL Tree
     for(int i = 0; i < treeNums.size(); i++) {
@@ -147,87 +148,87 @@ int main(int argc, char** argv) {
         avl.insert(treeNums[i]);
     }
 
-    //! Loop to output treeNums to console for troubleshooting
-    cout << "Contents of treeNums vector: " << endl;
-    for(int i = 0; i < treeNums.size(); i++) {
-        cout << treeNums[i] << " ";
-    }
-    cout << endl;
-
-    bst.insert(32769);  //! Lines 150 - 151 added for troubleshooting
-    avl.insert(32769);
-
-    // // Logic for randomMix, max insertions, max deletions, and max searches
-    // if (stringArgs["runtype"] == "randomMix") {
-        
-    //    // Search each tree for random values
-    //     for(int i = 0; i < treeSearches.size(); i++){
-    //         bst.search(treeSearches[i]);
-    //         avl.search(treeSearches[i]);
-    //     }
-
-    //     // Delete random values from each tree
-    //     for(int i = 0; i < treeDeletions.size(); i++){
-    //         bst.remove(treeDeletions[i]);
-    //         avl.remove(treeDeletions[i]);
-    //     }
-
-    // } else if (stringArgs["runtype"] == "deletions") {
-
-    //     // Delete random values from each tree
-    //     for(int i = 0; i < treeDeletions.size(); i++){
-    //         bst.remove(treeDeletions[i]);
-    //         avl.remove(treeDeletions[i]);
-    //     }
-
-    // } else if (stringArgs["runtype"] == "searches") {
-
-    //     // Search each tree for random values
-    //     for(int i = 0; i < treeSearches.size(); i++){
-    //         bst.search(treeSearches[i]);
-    //         avl.search(treeSearches[i]);
-    //     }
-
+    // //! Loop to output treeNums to console for troubleshooting
+    // cout << "Contents of treeNums vector: " << endl;
+    // for(int i = 0; i < treeNums.size(); i++) {
+    //     cout << treeNums[i] << " ";
     // }
+    // cout << endl;
 
-    // Print in-order traversal of the BST
-    std::cout << "Inorder traversal of the BST: ";
-    bst.inorder();
-    std::cout << std::endl;
+    // bst.insert(32769);  //! Lines 150 - 151 added for troubleshooting
+    // avl.insert(32769);
 
-    cout<<bst.toDotFormat();    //! Added for troubleshooting
-    cout<<avl.toDotFormat();    //! Added for troubleshooting
+    // Logic for randomMix, max insertions, max deletions, and max searches
+    if (stringArgs["runtype"] == "randomMix") {
+        
+       // Search each tree for random values
+        for(int i = 0; i < treeSearches.size(); i++){
+            bst.search(treeSearches[i]);
+            avl.search(treeSearches[i]);
+        }
+
+        // Delete random values from each tree
+        for(int i = 0; i < treeDeletions.size(); i++){
+            bst.remove(treeDeletions[i]);
+            avl.remove(treeDeletions[i]);
+        }
+
+    } else if (stringArgs["runtype"] == "deletions") {
+
+        // Delete random values from each tree
+        for(int i = 0; i < treeDeletions.size(); i++){
+            bst.remove(treeDeletions[i]);
+            avl.remove(treeDeletions[i]);
+        }
+
+    } else if (stringArgs["runtype"] == "searches") {
+
+        // Search each tree for random values
+        for(int i = 0; i < treeSearches.size(); i++){
+            bst.search(treeSearches[i]);
+            avl.search(treeSearches[i]);
+        }
+
+    }
+
+    // // Print in-order traversal of the BST
+    // std::cout << "Inorder traversal of the BST: ";
+    // bst.inorder();
+    // std::cout << std::endl;
+
+    // cout<<bst.toDotFormat();    //! Added for troubleshooting
+    // cout<<avl.toDotFormat();    //! Added for troubleshooting
 
     // Search for a key in the BST
-    int key = 40;
+    // int key = 40;
         
-    while (key != 0) {
-        // if (bst.search(key)) {
-        //     std::cout << "Element " << key << " found in the BST." << std::endl;
-        //     bst.remove(key);
-        // } else {
-        //     std::cout << "Element " << key << " not found in the BST." << std::endl;
-        // }
+    // while (key != 0) {
+    //     if (bst.search(key)) {
+    //         std::cout << "Element " << key << " found in the BST." << std::endl;
+    //         bst.remove(key);
+    //     } else {
+    //         std::cout << "Element " << key << " not found in the BST." << std::endl;
+    //     }
 
-        if (avl.search(key)) {
-            std::cout << "Element " << key << " found in the AVL." << std::endl;
-            avl.remove(key);
-        } else {
-            std::cout << "Element " << key << " not found in the AVL." << std::endl;
-        }
-        // bst.inorder();
-        // cout << endl;
-        avl.inorder();
-        cout << endl;
+    //     if (avl.search(key)) {
+    //         std::cout << "Element " << key << " found in the AVL." << std::endl;
+    //         avl.remove(key);
+    //     } else {
+    //         std::cout << "Element " << key << " not found in the AVL." << std::endl;
+    //     }
+    //     bst.inorder();
+    //     cout << endl;
+    //     avl.inorder();
+    //     cout << endl;
 
-        cout << "Enter a key: ";
-        cin >> key;
-    }
+    //     cout << "Enter a key: ";
+    //     cin >> key;
+    // }
 
-    cout<<"BST Height:"<<bst.treeHeight()<<endl;
-    cout<<"AVL Height:"<<avl.treeHeight()<<endl;
-    cout<<"BST Comparisons:"<<bst.getComps()<<endl;
-    cout<<"AVL Comparisons:"<<avl.getComps()<<endl;
+    cout << "BST Height:" << bst.treeHeight()<<endl;
+    cout << "AVL Height:"<< avl.treeHeight()<<endl;
+    cout << "BST Comparisons:" << bst.getComps()<<endl;
+    cout << "AVL Comparisons:" << avl.getComps()<<endl;
     
     ofstream foutBST;
     foutBST.open("data/"+stringArgs["bstdot"]);
@@ -237,7 +238,7 @@ int main(int argc, char** argv) {
 
     //cout<<avl.toDotFormat();
     //graphviz online
-    foutBST<<bst.toDotFormat();
-    foutAVL<<avl.toDotFormat();
+    foutBST << bst.toDotFormat();
+    foutAVL << avl.toDotFormat();
     return 0;
 }
