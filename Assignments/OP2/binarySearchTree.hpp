@@ -29,18 +29,12 @@ protected:
             stream << "    " << node->key << " -- " << node->left->key << ";\n";
             toDotFormat(node->left, stream);
         }
-        // else {                           //! lines 32 - 34 and 41 - 43 added to try to get nullptr symbols in graphviz online
-        //     stream << "    " << node->key << " -- " << -node->key << " [label=\"\" shape=point] ;\n";
-        // }
-
-        // Output the connection to the right child if it exists
+       
+       // Output the connection to the right child if it exists
         if (node->right) {
             stream << "    " << node->key << " -- " << node->right->key << ";\n";
             toDotFormat(node->right, stream);
         }
-        // else {
-        //     stream << "    " << node->key << " -- " << -node->key << " [label=\"\" shape=point] ;\n";
-        // }
     }
 
     int treeHeight(Node* node) {
@@ -67,8 +61,8 @@ protected:
     // Function to do inorder traversal of BST
     void inorder(Node *node) {
         if (node != nullptr) {
-            inorder(node->left);                //! Segmentation fault here; removed leaf and then branch w/2 children and 4 additional ancestors
-            std::cout << node->key << " ";      //! Segmentation fault here; cut right child of root, terminal only outputs left children of root
+            inorder(node->left);
+            std::cout << node->key << " ";
             inorder(node->right);
         }
     }
@@ -85,7 +79,7 @@ protected:
     }
 
     // Function to search a given key in a given BST
-    bool search(Node *node, int key) {  //! removing bst.inorder output results in segmentation fault here
+    bool search(Node *node, int key) {
         comps++;    
         // Base Cases: root is null or key is present at root
         if (!node)
@@ -134,27 +128,7 @@ protected:
                 delete node;
                 return temp;
             }
-
-            // // Node with two children: Get the inorder successor
-            // // (smallest in the right subtree)
-            // Node* succParent = node;
-            // Node* succ = node->right;
-            // while (succ->left != NULL) {
-            //     succParent = succ;
-            //     succ = succ->left;
-            // }
-
-            // // Copy the inorder successor's content to this node
-            // node->key = succ->key;
-
-            // // Delete the inorder successor
-            // if (succParent->left == succ)
-            //     succParent->left = succ->right;
-            // else
-            //     succParent->right = succ->right;
             
-            // delete succ;
-            // return node;
             if (!node->left)
             {
                 Node *temp = node->right;

@@ -1,0 +1,311 @@
+Float arguments:
+maxval = 256
+minval = 0
+nums = 256
+String arguments:
+avldot = avldot1.256.dot
+bstdot = bstdot1.256.dot
+runtype = randomMix
+BST Height:1
+AVL Height:1
+BST Comparisons:6387
+AVL Comparisons:5543
+
+Float arguments:
+maxval = 512
+minval = 0
+nums = 512
+String arguments:
+avldot = avldot2.512.dot
+bstdot = bstdot2.512.dot
+runtype = randomMix
+BST Height:1
+AVL Height:1
+BST Comparisons:15194
+AVL Comparisons:12603
+
+Float arguments:
+maxval = 1024
+minval = 0
+nums = 1024
+String arguments:
+avldot = avldot3.1024.dot
+bstdot = bstdot3.1024.dot
+runtype = randomMix
+BST Height:1
+AVL Height:1
+BST Comparisons:34908
+AVL Comparisons:28353
+
+Float arguments:
+maxval = 512
+minval = 0
+nums = 256
+String arguments:
+avldot = avldot4.512.256.dot
+bstdot = bstdot4.512.256.dot
+runtype = randomMix
+BST Height:14
+AVL Height:9
+BST Comparisons:7461
+AVL Comparisons:6181
+
+Float arguments:
+maxval = 1024
+minval = 0
+nums = 512
+String arguments:
+avldot = avldot5.1024.512.dot
+bstdot = bstdot5.1024.512.dot
+runtype = randomMix
+BST Height:19
+AVL Height:10
+BST Comparisons:18169
+AVL Comparisons:13891
+
+Float arguments:
+maxval = 2048
+minval = 0
+nums = 1024
+String arguments:
+avldot = avldot6.2048.1024.dot
+bstdot = bstdot6.2048.1024.dot
+runtype = randomMix
+BST Height:19
+AVL Height:11
+BST Comparisons:37465
+AVL Comparisons:30840
+
+Float arguments:
+maxval = 256
+minval = 0
+nums = 256
+String arguments:
+avldot = avldot7.256.dot
+bstdot = bstdot7.256.dot
+runtype = insertions
+BST Height:16
+AVL Height:10
+BST Comparisons:2321
+AVL Comparisons:1971
+
+Float arguments:
+maxval = 512
+minval = 0
+nums = 512
+String arguments:
+avldot = avldot8.512.dot
+bstdot = bstdot8.512.dot
+runtype = insertions
+BST Height:20
+AVL Height:11
+BST Comparisons:5355
+AVL Comparisons:4491
+
+Float arguments:
+maxval = 1024
+minval = 0
+nums = 1024
+String arguments:
+avldot = avldot9.1024.dot
+bstdot = bstdot9.1024.dot
+runtype = insertions
+BST Height:22
+AVL Height:12
+BST Comparisons:12556
+AVL Comparisons:10053
+
+Float arguments:
+maxval = 512
+minval = 0
+nums = 256
+String arguments:
+avldot = avldot10.512.256.dot
+bstdot = bstdot10.512.256.dot
+runtype = insertions
+BST Height:17
+AVL Height:10
+BST Comparisons:2675
+AVL Comparisons:1982
+
+Float arguments:
+maxval = 1024
+minval = 0
+nums = 512
+String arguments:
+avldot = avldot11.1024.512.dot
+bstdot = bstdot11.1024.512.dot
+runtype = insertions
+BST Height:18
+AVL Height:11
+BST Comparisons:5136
+AVL Comparisons:4452
+
+Float arguments:
+maxval = 2048
+minval = 0
+nums = 1024
+String arguments:
+avldot = avldot12.2048.1024.dot
+bstdot = bstdot12.2048.1024.dot
+runtype = insertions
+BST Height:20
+AVL Height:12
+BST Comparisons:10883
+AVL Comparisons:10042
+
+Float arguments:
+maxval = 256
+minval = 0
+nums = 256
+String arguments:
+avldot = avldot13.256.dot
+bstdot = bstdot13.256.dot
+runtype = deletions
+BST Height:1
+AVL Height:1
+BST Comparisons:4166
+AVL Comparisons:3707
+
+Float arguments:
+maxval = 512
+minval = 0
+nums = 512
+String arguments:
+avldot = avldot14.512.dot
+bstdot = bstdot14.512.dot
+runtype = deletions
+BST Height:1
+AVL Height:1
+BST Comparisons:9483
+AVL Comparisons:8433
+
+Float arguments:
+maxval = 1024
+minval = 0
+nums = 1024
+String arguments:
+avldot = avldot15.1024.dot
+bstdot = bstdot15.1024.dot
+runtype = deletions
+BST Height:1
+AVL Height:1
+BST Comparisons:21904
+AVL Comparisons:18871
+
+Float arguments:
+maxval = 512
+minval = 0
+nums = 256
+String arguments:
+avldot = avldot16.512.256.dot
+bstdot = bstdot16.512.256.dot
+runtype = deletions
+BST Height:14
+AVL Height:8
+BST Comparisons:5014
+AVL Comparisons:4079
+
+Float arguments:
+maxval = 1024
+minval = 0
+nums = 512
+String arguments:
+avldot = avldot17.1024.512.dot
+bstdot = bstdot17.1024.512.dot
+runtype = deletions
+BST Height:14
+AVL Height:10
+BST Comparisons:10512
+AVL Comparisons:9138
+
+Float arguments:
+maxval = 2048
+minval = 0
+nums = 1024
+String arguments:
+avldot = avldot18.2048.1024.dot
+bstdot = bstdot18.2048.1024.dot
+runtype = deletions
+BST Height:21
+AVL Height:11
+BST Comparisons:25534
+AVL Comparisons:20439
+
+Float arguments:
+maxval = 256
+minval = 0
+nums = 256
+String arguments:
+avldot = avldot19.256.dot
+bstdot = bstdot19.256.dot
+runtype = searches
+BST Height:16
+AVL Height:10
+BST Comparisons:5106
+AVL Comparisons:3853
+
+Float arguments:
+maxval = 512
+minval = 0
+nums = 512
+String arguments:
+avldot = avldot20.512.dot
+bstdot = bstdot20.512.dot
+runtype = searches
+BST Height:19
+AVL Height:11
+BST Comparisons:10860
+AVL Comparisons:8712
+
+Float arguments:
+maxval = 1024
+minval = 0
+nums = 1024
+String arguments:
+avldot = avldot21.1024.dot
+bstdot = bstdot21.1024.dot
+runtype = searches
+BST Height:20
+AVL Height:12
+BST Comparisons:22968
+AVL Comparisons:19451
+
+Float arguments:
+maxval = 512
+minval = 0
+nums = 256
+String arguments:
+avldot = avldot22.512.256.dot
+bstdot = bstdot22.512.256.dot
+runtype = searches
+BST Height:20
+AVL Height:10
+BST Comparisons:5808
+AVL Comparisons:4098
+
+Float arguments:
+maxval = 1024
+minval = 0
+nums = 512
+String arguments:
+avldot = avldot23.1024.512.dot
+bstdot = bstdot23.1024.512.dot
+runtype = searches
+BST Height:19
+AVL Height:11
+BST Comparisons:12007
+AVL Comparisons:9309
+
+Float arguments:
+maxval = 2048
+minval = 0
+nums = 1024
+String arguments:
+avldot = avldot24.2048.1024.dot
+bstdot = bstdot24.2048.1024.dot
+runtype = searches
+BST Height:20
+AVL Height:12
+BST Comparisons:25364
+AVL Comparisons:20441
